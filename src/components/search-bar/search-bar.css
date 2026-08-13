@@ -1,0 +1,79 @@
+.cl-search-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--cl-space-sm);
+  height: 40px;
+  padding: 0 var(--cl-space-md);
+  background: var(--cl-card-background);
+  border: 1px solid var(--cl-border);
+  border-radius: var(--cl-radius-pill);
+  font-family: var(--cl-font-family);
+}
+
+.cl-search-bar:focus-within {
+  border-color: var(--cl-primary);
+}
+
+.cl-search-bar.is-disabled {
+  background: var(--cl-background);
+  opacity: 0.6;
+}
+
+/* 視覺隱藏但保留給輔助技術 */
+.cl-search-bar__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.cl-search-bar__icon {
+  color: var(--cl-text-secondary);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.cl-search-bar__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: var(--cl-font-size-body);
+  line-height: var(--cl-line-height-body);
+  color: var(--cl-text);
+}
+
+.cl-search-bar__input::placeholder {
+  color: var(--cl-text-placeholder);
+}
+
+/* 關掉 Safari/Chrome 內建的清除鈕，統一用自己的 */
+.cl-search-bar__input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.cl-search-bar__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  background: var(--cl-border);
+  color: var(--cl-card-background);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.cl-search-bar__clear:focus-visible {
+  outline: 2px solid var(--cl-primary);
+  outline-offset: 2px;
+}

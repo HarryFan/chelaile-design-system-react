@@ -1,0 +1,53 @@
+/**
+ * Design tokens
+ *
+ * 與 Vue 版（chelaile-mobile-design-system）共用同一組數值，
+ * 但這裡刻意用 CSS 變數而非 Tailwind：元件庫要能被任何專案安裝，
+ * 不該強迫使用端也裝 Tailwind 並複製 config。
+ */
+
+:root {
+  /* 品牌色 */
+  --cl-primary: #2d6dff;
+  --cl-primary-light: #e6eeff;
+  --cl-primary-dark: #1a4dcc;
+
+  /* 功能色 */
+  --cl-success: #52c41a;
+  --cl-warning: #faad14;
+  --cl-danger: #ff4d4f;
+  --cl-info: #1890ff;
+
+  /* 中性色 */
+  --cl-text: #1f2329;
+  --cl-text-regular: #333333;
+  --cl-text-secondary: #8a8f99;
+  --cl-text-placeholder: #c2c7ce;
+  --cl-border: #e5e6eb;
+  --cl-background: #f7f8fa;
+  --cl-card-background: #ffffff;
+
+  /* 字體 */
+  --cl-font-family: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+  --cl-font-size-title: 18px;
+  --cl-font-size-subtitle: 16px;
+  --cl-font-size-body: 14px;
+  --cl-font-size-caption: 12px;
+  --cl-line-height-title: 28px;
+  --cl-line-height-subtitle: 24px;
+  --cl-line-height-body: 22px;
+  --cl-line-height-caption: 18px;
+
+  /* 間距：4px 基準 */
+  --cl-space-xs: 4px;
+  --cl-space-sm: 8px;
+  --cl-space-md: 16px;
+  --cl-space-lg: 24px;
+
+  /* 圓角 */
+  --cl-radius-card: 12px;
+  --cl-radius-pill: 9999px;
+
+  /* 陰影 */
+  --cl-shadow-card: 0 1px 2px rgba(31, 35, 41, 0.06);
+}
