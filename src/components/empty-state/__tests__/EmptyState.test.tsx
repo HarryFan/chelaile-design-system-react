@@ -34,11 +34,18 @@ describe('EmptyState', () => {
     expect(onAction).toHaveBeenCalledTimes(1);
   });
 
-  it('icon 對輔助科技隱藏，避免螢幕閱讀器唸出 emoji 名稱', () => {
-    const { container } = render(<EmptyState icon="🚌" />);
+  it('icon 渲染成 Remix Icon class，且對輔助科技隱藏', () => {
+    const { container } = render(<EmptyState icon="ri-bus-line" />);
     const icon = container.querySelector('.cl-empty-state__icon');
+    expect(icon?.tagName).toBe('I');
+    expect(icon).toHaveClass('cl-icon', 'ri-bus-line');
     expect(icon).toHaveAttribute('aria-hidden', 'true');
-    expect(icon).toHaveTextContent('🚌');
+    expect(icon).toBeEmptyDOMElement();
+  });
+
+  it('預設 icon 為 ri-inbox-line', () => {
+    const { container } = render(<EmptyState />);
+    expect(container.querySelector('.cl-empty-state__icon')).toHaveClass('ri-inbox-line');
   });
 
   it('className 會合併到 root 上，讓使用端可覆寫樣式', () => {

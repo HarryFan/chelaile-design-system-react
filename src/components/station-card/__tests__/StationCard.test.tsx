@@ -16,6 +16,13 @@ describe('StationCard', () => {
     expect(screen.getByText('250 公尺')).toBeInTheDocument();
   });
 
+  it('距離前置 ri-map-pin-line 圖示，對輔助科技隱藏', () => {
+    const { container } = render(<StationCard stationName="市政府站" distance="250 公尺" />);
+    const icon = container.querySelector('.cl-station-card__distance .cl-icon');
+    expect(icon).toHaveClass('ri-map-pin-line');
+    expect(icon).toHaveAttribute('aria-hidden', 'true');
+  });
+
   it('沒給 distance 就不渲染距離區塊', () => {
     const { container } = render(<StationCard stationName="市政府站" busList={busList} />);
     expect(container.querySelector('.cl-station-card__distance')).toBeNull();

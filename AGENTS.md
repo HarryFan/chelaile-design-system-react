@@ -22,7 +22,7 @@
 - **測試是行為測試，不是 render-only、不是 snapshot**。每元件 ≥ 4 個，測試名稱繁體中文，描述「使用者做什麼 → 看到什麼」。
 - **樣式只吃 `var(--cl-*)` token**，禁止硬編碼色碼、禁止 Tailwind 原生色（`bg-green-50` 這種）。樣式在 `pascal.css`，class 走 BEM `cl-<kebab>__part`，與 Vue 版共用同一套選擇器。
 - **空值占位由父層負責**：元件不自己渲染 `--`，`description` 沒給就不渲染那個節點。
-- **icon 一律 Remix Icon 字型**（`remixicon` dependency，`ri-*` class）：`icon` prop 收 class 名字串，元件渲染 `<i class="cl-icon {icon}" aria-hidden="true">`。禁止 emoji、禁止 ✓ × ! 文字符號（含 story、demo、測試資料）。
+- **icon 一律 Remix Icon 字型**（`remixicon` 為 peerDependency，`ri-*` class；字型 css 不進 lib，使用端／demo／Storybook 各自 import）：`icon` prop 收 class 名字串，元件渲染 `<i class="cl-icon {icon}" aria-hidden="true">`。禁止 emoji、禁止 ✓ × ! 文字符號（含 story、demo、測試資料）。
 - **不動的東西**：（無；此 repo 只有元件庫）。不在 lib build 入口，本輪範圍外，不刪不 export（見 spec §4）。
 - **git**：只 `git add <明確路徑>`，禁止 `git add .` / `-A`。`*.bak-*` 已 ignore，備份檔不進 git。commit message 繁體中文、動詞開頭、說 why 不只說 what。
 

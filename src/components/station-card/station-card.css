@@ -30,9 +30,17 @@
 
 .cl-station-card__distance {
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
   font-size: var(--cl-font-size-caption);
   line-height: var(--cl-line-height-caption);
   color: var(--cl-text-secondary);
+}
+
+/* 地標圖示略大於 caption 字，跟文字視覺對齊 */
+.cl-station-card__distance .cl-icon {
+  font-size: 14px;
 }
 
 .cl-station-card__list {

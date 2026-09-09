@@ -4,7 +4,7 @@ import { cn } from '../../utils/cn';
 export interface TabBarItem {
   key: string;
   label: string;
-  /** emoji 或文字，先不綁 icon 庫 */
+  /** Remix Icon class，如 `ri-home-5-line` */
   icon?: string;
   /** 未讀數；0 或未給不顯示，大於 99 顯示 `99+` */
   badge?: number;
@@ -29,7 +29,7 @@ export function formatBadge(badge?: number): string | undefined {
  * 兩條容易被漏掉的規則集中在這裡：
  *
  * 1. **點擊已選中的 tab 不發 change**：否則父層會因為同值更新而多跑一次路由或請求。
- * 2. **roving tabindex**：只有選中的 tab 可被 Tab 鍵聚焦，←/→ 在 tab 之間循環切換。
+ * 2. **roving tabindex**：只有選中的 tab 可被 Tab 鍵聚焦，ArrowLeft / ArrowRight 在 tab 之間循環切換。
  *    這是 WAI-ARIA tabs pattern 的要求，沒做的話鍵盤使用者要按很多次 Tab 才能離開列表。
  */
 export function useTabBar(options: UseTabBarOptions) {

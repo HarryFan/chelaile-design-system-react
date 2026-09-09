@@ -32,10 +32,11 @@
   border: 0;
 }
 
+/* 放大鏡：在欄位內、輸入框左側，用次要色不搶 placeholder */
 .cl-search-bar__icon {
+  flex-shrink: 0;
   color: var(--cl-text-secondary);
   font-size: 18px;
-  line-height: 1;
 }
 
 .cl-search-bar__input {
@@ -58,19 +59,26 @@
   appearance: none;
 }
 
+/* 清除鈕：ri-close-circle-fill 本身就是實心圓，不再另畫底色 */
 .cl-search-bar__clear {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
   border: none;
   border-radius: 50%;
-  background: var(--cl-border);
-  color: var(--cl-card-background);
-  font-size: 14px;
+  background: transparent;
+  color: var(--cl-text-placeholder);
+  font-size: 18px;
   line-height: 1;
   cursor: pointer;
+}
+
+.cl-search-bar__clear:hover {
+  color: var(--cl-text-secondary);
 }
 
 .cl-search-bar__clear:focus-visible {

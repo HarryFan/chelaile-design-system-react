@@ -10,9 +10,8 @@
 }
 
 .cl-empty-state__icon {
-  display: block;
   font-size: 48px;
-  line-height: 1;
+  color: var(--cl-text-placeholder);
   margin-bottom: var(--cl-space-xs);
 }
 

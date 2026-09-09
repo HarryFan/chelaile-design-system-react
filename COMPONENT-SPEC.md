@@ -13,6 +13,7 @@
 | 檔案 | `Pascal.tsx` / `usePascal.ts` / `pascal.css` / `Pascal.stories.tsx` / `__tests__/Pascal.test.tsx` / `index.ts` | `Pascal.vue` / `usePascal.ts` / `Pascal.stories.ts` / `__tests__/Pascal.test.ts` / `index.ts`（樣式寫在 SFC `<style>`，不用 scoped，class 命名同 React） |
 | root class | `cl-<kebab>` | 同 |
 | BEM | `cl-<kebab>__part`、modifier `cl-<kebab>--<mod>`、狀態 `is-<state>` | 同 |
+| icon | 一律 [Remix Icon](https://remixicon.com) 字型圖示：`icon` prop 收 class 名字串（如 `ri-bus-line`），元件渲染 `<i class="cl-icon {icon}" aria-hidden="true">`；元件內建圖示（見各元件）也用 Remix class。**禁止 emoji、禁止 ✓ × ! 這類文字符號**。`remixicon` 為 **peerDependency**：字型不打進 lib css（Vite lib 模式會把字型 inline 成 data URI，css 會撐到 6MB），使用端自行 `import 'remixicon/fonts/remixicon.css'`；demo 入口與 Storybook preview 各自 import | 同 |
 | token | 只用 `var(--cl-*)`，禁止硬編碼色碼 | 同（Vue 亦可用 Tailwind class，但 Tailwind 色必須是 map 到 `--cl-*` 的 `primary/success/...`，不用 `bg-green-50` 這種原生色） |
 | 空值 | 父層負責擋空值；元件不自己渲染 `--` | 同 |
 | 事件 | `onAction` | `emit('action')` |
@@ -37,36 +38,36 @@ React 現有 `tokens.css` 為準。Vue 端新增同名檔並讓 `tailwind.config
 - props：`value`（受控；Vue 用 `modelValue` + `update:modelValue`）、`defaultValue`、`placeholder` = '搜尋站牌或路線'、`label` = '搜尋'（視覺隱藏的 a11y label）、`disabled`、`autoFocus`、`debounceMs` = 300
 - 事件：`change(value)` 每次真實值變動；`search(value)` debounce 後；`clear()`
 - 行為：中文輸入法 `compositionstart`/`compositionend` 期間不觸發 change/search；組字中按 Enter 視為選字不是送出；Enter 立即觸發 `search`（略過 debounce）；卸載清 timer；有值才顯示清除鈕
-- class：`cl-search-bar [is-disabled]`，`__label`、`__input`、`__clear`
+- class：`cl-search-bar [is-disabled]`，`__label`、`__icon`（`ri-search-line`，aria-hidden）、`__input`、`__clear`（內含 `ri-close-circle-fill`）
 
 ### 2.3 StatusCard
 - props：`tone: 'success'|'warning'|'danger'|'info'` = info；`title` 必填；`description?`；`actionText?`；事件 `action`
 - 行為：`danger` → `role="alert"` + `aria-live="assertive"`；其餘 `role="status"` + `aria-live="polite"`。有 `actionText` 才渲染按鈕（用本庫的 Button，variant secondary、size sm、round）。`description` 為空/undefined 時不渲染 `<p>`。
-- class：`cl-status-card cl-status-card--{tone}`，`__icon`（aria-hidden）、`__body`、`__title`、`__desc`
+- class：`cl-status-card cl-status-card--{tone}`，`__icon`（`<i class="cl-icon ri-…" aria-hidden>`：success `ri-checkbox-circle-fill`、warning `ri-error-warning-fill`、danger `ri-close-circle-fill`、info `ri-information-fill`）、`__body`、`__title`、`__desc`
 - Vue：現有 `GeoStatusCard` 改成 StatusCard 的薄包裝：`status: success|warning|error|loading` → tone `success|warning|danger|info`，`statusText` → `description`，`showAction && actionText` → `actionText`。GeoStatusCard 既有測試要改成對應新 DOM（`.cl-status-card--danger` 取代 `bg-red-50`），但測試意圖保留。
 
 ### 2.4 StationCard
 - 型別：`BusInfo { routeId: string; routeName: string; arrivalTime?: string; isArriving?: boolean }`
 - props：`stationName` 必填；`distance?`；`busList: BusInfo[]` = []；`actionText?`；事件 `action`
 - 行為：`distance` 有值才渲染距離區塊；每筆 bus 渲染 `cl-station-card__bus`，`isArriving` 加 `is-arriving`；`arrivalTime` 有值顯示，否則顯示「更新中」文字（不用 spinner，兩邊一致好測）；`busList` 空 → 顯示「目前沒有班次資訊」；`actionText` 有值才顯示 Button（secondary/sm/round）。**移除舊 `showAction` prop**，Vue 測試同步改。
-- class：`cl-station-card`，`__header`、`__name`、`__distance`、`__list`、`__bus [is-arriving]`、`__route`、`__time`、`__empty`、`__footer`
+- class：`cl-station-card`，`__header`、`__name`、`__distance`（前置 `ri-map-pin-line`）、`__list`、`__bus [is-arriving]`、`__route`、`__time`、`__empty`、`__footer`
 
 ### 2.5 TabBar
-- 型別：`TabBarItem { key: string; label: string; icon?: string /* emoji 或文字，先不綁 icon 庫 */; badge?: number }`
+- 型別：`TabBarItem { key: string; label: string; icon?: string /* Remix Icon class，如 ri-home-line */; badge?: number }`
 - props：`items: TabBarItem[]` 必填；`active: string`（Vue：`modelValue` + `update:modelValue`）；事件 `change(key)`
 - 行為：`role="tablist"`，每個 tab `role="tab"` + `aria-selected`；點擊已選中的 tab 不發 change；鍵盤 ←/→ 循環切換（在 hook 內處理）；`badge > 99` 顯示 `99+`
-- class：`cl-tab-bar`，`__item [is-active]`、`__icon`、`__label`、`__badge`
+- class：`cl-tab-bar`，`__item [is-active]`、`__icon`（`<i class="cl-icon {icon}" aria-hidden>`）、`__label`、`__badge`
 - Vue：取代 `common-app-tab-bar`（目錄改名 `tab-bar`，硬編碼五個 tab 移除）。
 
 ### 2.6 AppHeader
 - props：`title?`；`showBack` = true；`backLabel` = '返回'；事件 `back`
 - slot/children：`left`（覆蓋返回鈕）、`right`（動作區）；React 用 `left?: ReactNode`、`right?: ReactNode`
-- 行為：`<header role="banner">`；返回鈕 `aria-label={backLabel}`；title 用 `<h1>`；沒 title 不渲染 h1
+- 行為：`<header role="banner">`；返回鈕 `aria-label={backLabel}`，內含 `<i class="cl-icon ri-arrow-left-s-line" aria-hidden>`；title 用 `<h1>`；沒 title 不渲染 h1
 - class：`cl-app-header`，`__left`、`__back`、`__title`、`__right`
 - Vue：取代 `common-app-header`（目錄改名 `app-header`），移除 `showSearch`/`backUrl`（路由跳轉是父層的事）。
 
 ### 2.7 EmptyState
-- props：`title` = '暫無資料'；`description?`；`icon?`（字串，預設 '📭'，`aria-hidden`）；`actionText?`；事件 `action`
+- props：`title` = '暫無資料'；`description?`；`icon?`（Remix Icon class 字串，預設 `ri-inbox-line`，渲染 `<i class="cl-icon {icon}" aria-hidden>`）；`actionText?`；事件 `action`
 - 行為：`role="status"`；`actionText` 有值才顯示 Button（primary/sm/round）
 - class：`cl-empty-state`，`__icon`、`__title`、`__desc`
 - Vue：從 `components/EmptyState.vue` 搬到 `components/empty-state/` 五件套；改 `<script setup lang="ts">`；移除 `@iconify/vue` 依賴。

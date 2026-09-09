@@ -54,6 +54,18 @@ describe('SearchBar', () => {
     expect(screen.queryByRole('button', { name: '清除搜尋' })).not.toBeInTheDocument();
   });
 
+  it('放大鏡與清除鈕都是 Remix Icon，對輔助科技隱藏', () => {
+    const { container } = render(<SearchBar defaultValue="板橋" />);
+    const search = container.querySelector('.cl-search-bar__icon');
+    expect(search?.tagName).toBe('I');
+    expect(search).toHaveClass('cl-icon', 'ri-search-line');
+    expect(search).toHaveAttribute('aria-hidden', 'true');
+
+    const clearIcon = screen.getByRole('button', { name: '清除搜尋' }).querySelector('i');
+    expect(clearIcon).toHaveClass('cl-icon', 'ri-close-circle-fill');
+    expect(clearIcon).toHaveAttribute('aria-hidden', 'true');
+  });
+
   it('Enter 會立即查詢，不等 debounce', () => {
     const onSearch = vi.fn();
     render(<SearchBar defaultValue="信義路" onSearch={onSearch} debounceMs={5000} />);

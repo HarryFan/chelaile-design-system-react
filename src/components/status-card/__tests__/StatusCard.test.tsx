@@ -38,4 +38,18 @@ describe('StatusCard', () => {
     const { container } = render(<StatusCard tone="warning" title="精度較低" />);
     expect(container.firstElementChild?.className).toContain('cl-status-card--warning');
   });
+
+  it.each([
+    ['success', 'ri-checkbox-circle-fill'],
+    ['warning', 'ri-error-warning-fill'],
+    ['danger', 'ri-close-circle-fill'],
+    ['info', 'ri-information-fill'],
+  ] as const)('%s 渲染對應的 Remix Icon class，且對輔助科技隱藏', (tone, iconClass) => {
+    const { container } = render(<StatusCard tone={tone} title="狀態" />);
+    const icon = container.querySelector('.cl-status-card__icon');
+    expect(icon?.tagName).toBe('I');
+    expect(icon).toHaveClass('cl-icon', iconClass);
+    expect(icon).toHaveAttribute('aria-hidden', 'true');
+    expect(icon).toBeEmptyDOMElement();
+  });
 });

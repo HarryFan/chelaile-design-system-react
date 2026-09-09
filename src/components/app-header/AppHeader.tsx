@@ -39,7 +39,7 @@ export function AppHeader({
         {hasLeft && left}
         {showBackButton && (
           <button type="button" className="cl-app-header__back" aria-label={backLabel} onClick={onBack}>
-            <span aria-hidden="true">‹</span>
+            <i className="cl-icon ri-arrow-left-s-line" aria-hidden="true" />
           </button>
         )}
       </div>

@@ -2,11 +2,12 @@ import { useMemo } from 'react';
 
 export type StatusTone = 'success' | 'warning' | 'danger' | 'info';
 
+/** 各 tone 的 Remix Icon class；元件渲染 `<i class="cl-icon {icon}">` */
 const TONE_ICON: Record<StatusTone, string> = {
-  success: '✓',
-  warning: '!',
-  danger: '×',
-  info: 'i',
+  success: 'ri-checkbox-circle-fill',
+  warning: 'ri-error-warning-fill',
+  danger: 'ri-close-circle-fill',
+  info: 'ri-information-fill',
 };
 
 /**

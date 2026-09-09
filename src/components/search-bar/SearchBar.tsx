@@ -28,7 +28,7 @@ export function SearchBar({
       <label className="cl-search-bar__label" htmlFor={inputId}>
         {label}
       </label>
-      <span className="cl-search-bar__icon" aria-hidden="true">⌕</span>
+      <i className="cl-icon cl-search-bar__icon ri-search-line" aria-hidden="true" />
       <input
         id={inputId}
         className="cl-search-bar__input"
@@ -45,7 +45,7 @@ export function SearchBar({
       />
       {hasValue && !disabled && (
         <button type="button" className="cl-search-bar__clear" onClick={clear} aria-label="清除搜尋">
-          ×
+          <i className="cl-icon ri-close-circle-fill" aria-hidden="true" />
         </button>
       )}
     </div>

@@ -5,9 +5,9 @@ import { TabBar } from '../TabBar';
 import { formatBadge, type TabBarItem } from '../useTabBar';
 
 const items: TabBarItem[] = [
-  { key: 'home', label: '首頁', icon: '🏠' },
-  { key: 'nearby', label: '附近', icon: '📍' },
-  { key: 'me', label: '我的', icon: '👤' },
+  { key: 'home', label: '首頁', icon: 'ri-home-5-line' },
+  { key: 'nearby', label: '附近', icon: 'ri-map-pin-2-line' },
+  { key: 'me', label: '我的', icon: 'ri-user-3-line' },
 ];
 
 describe('TabBar', () => {
@@ -76,6 +76,18 @@ describe('TabBar', () => {
       />,
     );
     expect(container.querySelector('.cl-tab-bar__badge')).toBeNull();
+  });
+
+  it('icon 渲染成 Remix Icon class，且對輔助科技隱藏；沒給 icon 就不渲染', () => {
+    const { container } = render(
+      <TabBar items={[...items, { key: 'plain', label: '純文字' }]} active="home" />,
+    );
+    const icons = container.querySelectorAll('.cl-tab-bar__icon');
+    expect(icons).toHaveLength(3);
+    expect(icons[0].tagName).toBe('I');
+    expect(icons[0]).toHaveClass('cl-icon', 'ri-home-5-line');
+    expect(icons[0]).toHaveAttribute('aria-hidden', 'true');
+    expect(icons[0]).toBeEmptyDOMElement();
   });
 
   it('formatBadge 的邊界值', () => {

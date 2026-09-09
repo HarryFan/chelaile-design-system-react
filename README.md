@@ -47,9 +47,10 @@ npm run new -- status-banner
 ```bash
 npm install
 npm run storybook     # 元件文件站 http://localhost:6006
-npm test              # 46 個測試
+npm test              # 55 個測試
 npm run typecheck     # tsc --noEmit
 npm run build         # dist/：es + cjs + css + .d.ts
+npm run dev           # 旗艦版 demo 頁 http://localhost:5173
 npm run new -- <name> # 依規範生成新元件
 ```
 
@@ -60,7 +61,13 @@ import { Button, StationCard } from 'chelaile-design-system-react';
 import 'chelaile-design-system-react/style.css'; // 含 tokens，可在自家 CSS 覆寫 --cl-primary 換主題
 ```
 
-React 是 peerDependency，不會被重複打包。
+React 與 `remixicon` 都是 peerDependency，不會被重複打包。圖示字型請在使用端自行載入一次：
+
+```ts
+import 'remixicon/fonts/remixicon.css';
+```
+
+所有元件圖示（含 StatusCard 的語意圖示、AppHeader 返回鍵、SearchBar 放大鏡）都走 Remix Icon，`icon` prop 收 `ri-*` class 名，禁止 emoji。
 
 ### 與 Vue 版的關係
 
@@ -100,13 +107,13 @@ React 是 peerDependency，不會被重複打包。
 ### TabBar
 底部分頁列，`items` 驅動、`active` 受控。
 
-**設計決策：真正的 `tablist` 語意 + roving tabindex。** 每個 tab 是 `role="tab"` + `aria-selected`，只有選中的那個 `tabIndex=0`，←/→ 循環切換並移動 DOM 焦點。點已選中的 tab 不發 `onChange`，父層不用自己 dedupe。badge 超過 99 顯示 `99+`。icon 收字串（emoji），不綁 icon 庫。
+**設計決策：真正的 `tablist` 語意 + roving tabindex。** 每個 tab 是 `role="tab"` + `aria-selected`，只有選中的那個 `tabIndex=0`，←/→ 循環切換並移動 DOM 焦點。點已選中的 tab 不發 `onChange`，父層不用自己 dedupe。badge 超過 99 顯示 `99+`。icon 收 Remix Icon class 字串（如 `ri-home-5-line`）。
 
 ### AppHeader
 頁首：返回鈕、標題、左右插槽。`<header role="banner">`，標題用 `<h1>`，沒標題就不渲染。`left` 給了就取代返回鈕。路由跳轉是父層的事，元件只發 `onBack`。
 
 ### EmptyState
-空狀態：icon（`aria-hidden`）、標題、說明、可選操作按鈕。`role="status"`。
+空狀態：icon（Remix Icon class，`aria-hidden`）、標題、說明、可選操作按鈕。`role="status"`。
 
 ### Loading
 載入指示：三種尺寸、可選全螢幕 `overlay`。`role="status"` + `aria-live="polite"`，spinner `aria-hidden`，`prefers-reduced-motion` 時放慢而非停止（停止會讓人以為卡死）。

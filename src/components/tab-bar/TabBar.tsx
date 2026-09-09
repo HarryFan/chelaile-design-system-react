@@ -1,3 +1,4 @@
+import { cn } from '../../utils/cn';
 import { useTabBar, type TabBarItem } from './useTabBar';
 import './tab-bar.css';
 
@@ -22,11 +23,7 @@ export function TabBar({ items, active, onChange, label = '主要導覽', classN
           const { badgeText, isActive, ...buttonProps } = getItemProps(item);
           return (
             <button key={item.key} {...buttonProps} data-key={item.key}>
-              {item.icon && (
-                <span className="cl-tab-bar__icon" aria-hidden="true">
-                  {item.icon}
-                </span>
-              )}
+              {item.icon && <i className={cn('cl-icon', 'cl-tab-bar__icon', item.icon)} aria-hidden="true" />}
               <span className="cl-tab-bar__label">{item.label}</span>
               {badgeText && (
                 <span className="cl-tab-bar__badge" aria-label={`${badgeText} 則未讀`}>

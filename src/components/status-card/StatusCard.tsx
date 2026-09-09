@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Button } from '../button';
+import { cn } from '../../utils/cn';
 import { useStatusCard, type StatusTone } from './useStatusCard';
 import './status-card.css';
 
@@ -27,13 +28,11 @@ export function StatusCard({
 
   return (
     <div
-      className={['cl-status-card', toneClassName, className].filter(Boolean).join(' ')}
+      className={cn('cl-status-card', toneClassName, className)}
       role={role}
       aria-live={ariaLive}
     >
-      <span className="cl-status-card__icon" aria-hidden="true">
-        {icon}
-      </span>
+      <i className={cn('cl-icon', 'cl-status-card__icon', icon)} aria-hidden="true" />
 
       <div className="cl-status-card__body">
         <h3 className="cl-status-card__title">{title}</h3>

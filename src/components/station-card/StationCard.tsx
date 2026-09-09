@@ -33,7 +33,12 @@ export function StationCard({
     <div className={rootClassName}>
       <div className="cl-station-card__header">
         <h3 className="cl-station-card__name">{stationName}</h3>
-        {hasDistance && <span className="cl-station-card__distance">{distance}</span>}
+        {hasDistance && (
+          <span className="cl-station-card__distance">
+            <i className="cl-icon ri-map-pin-line" aria-hidden="true" />
+            {distance}
+          </span>
+        )}
       </div>
 
       {isEmpty ? (

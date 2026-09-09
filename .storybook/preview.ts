@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/react-vite';
 import '../src/styles/tokens.css';
+import 'remixicon/fonts/remixicon.css';
 
 const preview: Preview = {
   parameters: {

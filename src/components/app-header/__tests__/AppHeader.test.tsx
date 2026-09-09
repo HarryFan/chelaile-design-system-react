@@ -19,6 +19,15 @@ describe('AppHeader', () => {
     expect(onBack).toHaveBeenCalledTimes(1);
   });
 
+  it('返回鈕內是 Remix Icon，對輔助科技隱藏，名稱只來自 aria-label', () => {
+    render(<AppHeader title="附近站牌" />);
+    const back = screen.getByRole('button', { name: '返回' });
+    const icon = back.querySelector('i');
+    expect(icon).toHaveClass('cl-icon', 'ri-arrow-left-s-line');
+    expect(icon).toHaveAttribute('aria-hidden', 'true');
+    expect(back).toHaveTextContent('');
+  });
+
   it('預設 backLabel 為「返回」', () => {
     render(<AppHeader title="附近站牌" />);
     expect(screen.getByRole('button', { name: '返回' })).toBeInTheDocument();

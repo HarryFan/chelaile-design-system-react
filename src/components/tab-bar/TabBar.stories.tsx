@@ -4,11 +4,11 @@ import { TabBar } from './TabBar';
 import type { TabBarItem } from './useTabBar';
 
 const items: TabBarItem[] = [
-  { key: 'home', label: '首頁', icon: '🏠' },
-  { key: 'nearby', label: '附近', icon: '📍' },
-  { key: 'favorite', label: '收藏', icon: '⭐', badge: 3 },
-  { key: 'news', label: '消息', icon: '🔔', badge: 120 },
-  { key: 'me', label: '我的', icon: '👤' },
+  { key: 'home', label: '首頁', icon: 'ri-home-5-line' },
+  { key: 'nearby', label: '附近', icon: 'ri-map-pin-2-line' },
+  { key: 'favorite', label: '收藏', icon: 'ri-star-line', badge: 3 },
+  { key: 'news', label: '消息', icon: 'ri-notification-3-line', badge: 120 },
+  { key: 'me', label: '我的', icon: 'ri-user-3-line' },
 ];
 
 const meta = {
@@ -46,10 +46,10 @@ export const Controlled: Story = {
 export const Badges: Story = {
   args: {
     items: [
-      { key: 'a', label: '無徽章', icon: '○' },
-      { key: 'b', label: '零', icon: '○', badge: 0 },
-      { key: 'c', label: '個位', icon: '○', badge: 5 },
-      { key: 'd', label: '破百', icon: '○', badge: 120 },
+      { key: 'a', label: '無徽章', icon: 'ri-checkbox-blank-circle-line' },
+      { key: 'b', label: '零', icon: 'ri-checkbox-blank-circle-line', badge: 0 },
+      { key: 'c', label: '個位', icon: 'ri-checkbox-blank-circle-line', badge: 5 },
+      { key: 'd', label: '破百', icon: 'ri-checkbox-blank-circle-line', badge: 120 },
     ],
     active: 'a',
   },

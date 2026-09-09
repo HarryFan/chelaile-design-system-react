@@ -3,6 +3,33 @@
 > 開發脈絡紀錄。每一輪寫：起點是什麼狀態、做了什麼決定、哪裡卡、**AI 哪裡判斷錯、怎麼發現、怎麼修**。
 > 這份不是 changelog（那看 git log），是「為什麼這樣走」。時間倒序。
 
+## 第三輪 · 2026-09-09 深夜 — 旗艦版 demo 頁、Remix Icon 取代 emoji（Claude Code / Claude Fable 5.1）
+
+### 起點
+
+第二輪的 demo 頁只是一張手機寬的元件列表，icon 用 emoji（📍⭐💬👤），StatusCard 用 ✓ × ! i 文字符號。要拿去面試，這兩件事都不行：emoji 在不同平台長得不一樣、也沒有一致的視覺重量；文字符號則根本不是 icon。
+
+### 決定
+
+- **Icon 一律 Remix Icon 字型**（`ri-*` class）。`icon` prop 仍收字串，只是字串從 emoji 變成 class 名；元件渲染 `<i class="cl-icon ri-…" aria-hidden>`。元件內建圖示（StatusCard 四種 tone、AppHeader 返回、SearchBar 放大鏡與清除、StationCard 距離）也走 Remix。規格 §0 加 icon 列，AGENTS.md 原本「不綁 icon 庫」那條改掉。
+- **字型不打進 lib css**。第一版把 `remixicon.css` import 進 `src/index.ts`，`vite build` 後 `style.css` 變 6.5 MB：Vite lib 模式會把 css 引用的字型全部 inline 成 data URI，`assetsInlineLimit` 對它沒用。改成 `remixicon` 當 peerDependency，使用端、demo 入口、Storybook preview 各自 import 一次。
+- **Demo 頁與 Vue 版逐字相同**：`demo/demo.css` 兩邊 byte-identical（`cmp` 過），`App.tsx` 與 Vue `App.vue` 同結構、同 class、同文案、同 icon，只差語法層。頁面：sticky 導覽列 + hero（左文案與三個數字、右手機框內的可互動 app：四個 tab 切換不同畫面、搜尋會過濾站牌、overlay loading）+ 8 元件卡片（每張標題旁一句最重要的設計決策）+ token 表（色票 / 字級 / 間距）+ 規範四格 + 五件套目錄樹。
+- **StatusCard icon 樣式兩邊對齊**：React agent 做成 40px 淡色圓底 + 20px tone 色 icon（`color-mix`），Vue agent 做成裸 icon；主線裁定用 React 版，Vue 端補齊。這種「兩個 agent 各自合理但不一致」的情況，只能靠主線最後對 diff。
+
+### 數字
+
+- 測試 47 → 55（每個換 icon 的元件加一個「icon class 有掛上」的測試）。
+- `tsc --noEmit`、`vite build`、`storybook build` 全綠。
+- `src/`、`demo/`、README 全文 grep 不到任何 emoji。
+
+### 下一輪
+
+- Demo 頁的 hero 手機框在 <480px 會縮成 700px 高，還沒在真機看過。
+- Storybook 的 a11y addon 仍未裝。
+- `pnpm-lock.yaml` 與 `package-lock.json` 並存，要選一個。
+
+---
+
 ## 第二輪 · 2026-09-09 下午 — 發布、規格入庫、文件（Claude Code / Claude Fable 5.1）
 
 ### 起點
