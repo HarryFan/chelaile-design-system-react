@@ -43,10 +43,24 @@ npm run new -- status-banner
 ```bash
 npm install
 npm run storybook     # 元件文件站 http://localhost:6006
-npm test              # 15 個測試
+npm test              # 46 個測試
 npm run typecheck     # tsc --noEmit
+npm run build         # dist/：es + cjs + css + .d.ts
 npm run new -- <name> # 依規範生成新元件
 ```
+
+### 當作套件使用
+
+```tsx
+import { Button, StationCard } from 'chelaile-design-system-react';
+import 'chelaile-design-system-react/style.css'; // 含 tokens，可在自家 CSS 覆寫 --cl-primary 換主題
+```
+
+React 是 peerDependency，不會被重複打包。
+
+### 與 Vue 版的關係
+
+同目錄的 `chelaile-mobile-design-system` 是 Vue 3 + Vant 版。兩邊 **props、事件、class 命名、a11y 語意、token 逐字一致**，只差語法層（`onAction` vs `@action`、hook vs composable）。單一 API 真相在 `../COMPONENT-SPEC.md`，改 API 先改規格再改兩邊。
 
 ---
 
@@ -73,6 +87,25 @@ npm run new -- <name> # 依規範生成新元件
 `danger` 用 `role="alert"` + `aria-live="assertive"`（螢幕閱讀器立刻打斷朗讀），其餘用 `role="status"` + `aria-live="polite"`（等目前朗讀完再補）。全部設成 alert 會讓使用者被不重要的訊息反覆打斷。
 
 **空值占位由父層負責**：`description` 沒給就不渲染那個節點，元件不自己補 `--`。這條規範來自 Vue 版踩過的坑——共用元件與父層各兜一次空值，最後沒人知道該改哪一層。
+
+### StationCard
+站牌卡：站名、距離、多路線到站清單、可選操作按鈕。`BusInfo { routeId, routeName, arrivalTime?, isArriving? }`。
+
+**設計決策：`arrivalTime` 缺值顯示「更新中」文字，不放 spinner。** 到站資訊是輪詢來的，缺值是常態不是錯誤；文字比動畫可測、可讀（螢幕閱讀器念得出來），兩個框架的 DOM 也才能一致。`busList` 為空顯示「目前沒有班次資訊」。
+
+### TabBar
+底部分頁列，`items` 驅動、`active` 受控。
+
+**設計決策：真正的 `tablist` 語意 + roving tabindex。** 每個 tab 是 `role="tab"` + `aria-selected`，只有選中的那個 `tabIndex=0`，←/→ 循環切換並移動 DOM 焦點。點已選中的 tab 不發 `onChange`，父層不用自己 dedupe。badge 超過 99 顯示 `99+`。icon 收字串（emoji），不綁 icon 庫。
+
+### AppHeader
+頁首：返回鈕、標題、左右插槽。`<header role="banner">`，標題用 `<h1>`，沒標題就不渲染。`left` 給了就取代返回鈕。路由跳轉是父層的事，元件只發 `onBack`。
+
+### EmptyState
+空狀態：icon（`aria-hidden`）、標題、說明、可選操作按鈕。`role="status"`。
+
+### Loading
+載入指示：三種尺寸、可選全螢幕 `overlay`。`role="status"` + `aria-live="polite"`，spinner `aria-hidden`，`prefers-reduced-motion` 時放慢而非停止（停止會讓人以為卡死）。
 
 ---
 

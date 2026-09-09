@@ -1,0 +1,61 @@
+.cl-app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  padding: 0 var(--cl-space-sm);
+  background: var(--cl-card-background);
+  border-bottom: 1px solid var(--cl-border);
+  font-family: var(--cl-font-family);
+  color: var(--cl-text);
+}
+
+/* 左右兩側等寬，標題才會真正置中而不是被返回鈕擠偏 */
+.cl-app-header__left,
+.cl-app-header__right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  min-width: 44px;
+  height: 100%;
+}
+
+.cl-app-header__right {
+  justify-content: flex-end;
+}
+
+.cl-app-header__back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--cl-text);
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cl-app-header__back:focus-visible {
+  outline: 2px solid var(--cl-primary);
+  outline-offset: -2px;
+}
+
+.cl-app-header__title {
+  flex: 1 1 0;
+  min-width: 0;
+  margin: 0;
+  text-align: center;
+  font-size: var(--cl-font-size-subtitle);
+  line-height: var(--cl-line-height-subtitle);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

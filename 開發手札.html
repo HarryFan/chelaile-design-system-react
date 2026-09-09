@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>開發手札 — chelaile-design-system-react</title>
+<style>
+  :root { --p:#2d6dff; --t:#1f2329; --t2:#8a8f99; --b:#e5e6eb; --bg:#f7f8fa; --card:#fff; --ok:#52c41a; --warn:#faad14; --bad:#ff4d4f; }
+  body { margin:0; padding:24px; font:14px/1.7 'Noto Sans TC','PingFang TC',sans-serif; color:var(--t); background:var(--bg); }
+  main { max-width:880px; margin:0 auto; }
+  h1 { font-size:22px; margin:0 0 4px; }
+  h2 { font-size:17px; margin:32px 0 8px; padding-bottom:4px; border-bottom:2px solid var(--p); }
+  h3 { font-size:15px; margin:16px 0 4px; }
+  .meta { color:var(--t2); font-size:12px; }
+  .card { background:var(--card); border:1px solid var(--b); border-radius:12px; padding:16px; margin:12px 0; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th,td { border:1px solid var(--b); padding:6px 8px; text-align:left; vertical-align:top; }
+  th { background:var(--bg); }
+  code { background:#eef1f5; padding:1px 5px; border-radius:4px; font-size:12.5px; }
+  pre { background:#1f2329; color:#e5e6eb; padding:12px; border-radius:8px; overflow-x:auto; font-size:12.5px; }
+  .tag { display:inline-block; padding:0 8px; border-radius:9999px; font-size:12px; color:#fff; }
+  .ok{background:var(--ok)} .warn{background:var(--warn)} .bad{background:var(--bad)} .info{background:var(--p)}
+  ul { padding-left:20px; }
+  li { margin:2px 0; }
+</style>
+</head>
+<body>
+<main>
+<h1>開發手札 — chelaile-design-system-react</h1>
+<p class="meta">React 19 版車來了設計系統。姊妹專案：<code>../chelaile-mobile-design-system</code>（Vue 3 + Vant 4）。兩者共用 <code>../COMPONENT-SPEC.md</code> 作為單一 API 真相。</p>
+
+<h2>2026-09-09 — 雙框架趨同開發（第一輪）</h2>
+
+<div class="card">
+<h3>起點診斷</h3>
+<table>
+<tr><th>項目</th><th>狀態</th><th>說明</th></tr>
+<tr><td>元件</td><td><span class="tag ok">3 完成</span></td><td>Button / SearchBar / StatusCard，六件套齊全（.tsx、hook、css、story、test、index）</td></tr>
+<tr><td>測試</td><td><span class="tag ok">15 通過</span></td><td>行為測試，非 render-only；含中文輸入法組字、loading 保留焦點、danger→role=alert</td></tr>
+<tr><td>Token</td><td><span class="tag ok">單一來源</span></td><td><code>src/styles/tokens.css</code>，<code>--cl-*</code> CSS 變數，零樣式框架依賴</td></tr>
+<tr><td>Storybook</td><td><span class="tag ok">v9 已設</span></td><td><code>.storybook/main.ts</code> + <code>preview.ts</code>，無 addon</td></tr>
+<tr><td>發布面</td><td><span class="tag bad">缺</span></td><td>無 <code>main/module/exports/types</code>、無 lib build、無 <code>index.html</code>，<code>npm run build</code> 不可用；React 是 dependency 不是 peer</td></tr>
+<tr><td>元件廣度</td><td><span class="tag warn">落後 Vue</span></td><td>Vue 端有 StationCard / TabBar / AppHeader / EmptyState / Loading，這裡沒有</td></tr>
+</table>
+</div>
+
+<div class="card">
+<h3>趨同決策</h3>
+<ul>
+<li><b>React 為慣例基準</b>：Vue 端向 React 的六件套結構、BEM class、<code>--cl-*</code> token、a11y 語意靠攏。理由：React 版是後寫的，README 已記錄從 Vue 版學到的教訓（空值由父層負責、loading 不設 disabled）。</li>
+<li><b>共用元件清單 8 個</b>：Button、SearchBar、StatusCard、StationCard、TabBar、AppHeader、EmptyState、Loading。地圖類、RoutePlanner、NewsFeedCard、Toast/Dialog 明列為本輪不做。</li>
+<li><b>API 統一規則</b>：「有 <code>actionText</code> 才顯示按鈕」取代 <code>showAction</code> 布林；<code>arrivalTime</code> 缺值顯示「更新中」文字而非 spinner（兩邊可測、一致）。</li>
+<li><b>icon 不綁圖庫</b>：TabBar / EmptyState 的 icon 收字串（emoji 或文字），避免 React 端被迫裝 iconify。</li>
+<li><b>規格檔位置</b>：<code>../COMPONENT-SPEC.md</code> 放在兩 repo 的共同父目錄，任一邊改 API 先改規格。</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>本輪工作分派</h3>
+<table>
+<tr><th>批次</th><th>內容</th><th>狀態</th></tr>
+<tr><td>A</td><td>新增 StationCard、TabBar、AppHeader（六件套 + 行為測試）</td><td><span class="tag ok">完成</span></td></tr>
+<tr><td>B</td><td>新增 EmptyState、Loading（六件套 + 行為測試）</td><td><span class="tag ok">完成</span></td></tr>
+<tr><td>C</td><td><code>src/index.ts</code> 接上 8 個元件 export；vite <code>build.lib</code>；package.json 加 exports / peerDependencies / files</td><td><span class="tag ok">完成</span></td></tr>
+</table>
+<p class="meta">A、B 並行時互不碰 <code>src/index.ts</code>，避免同檔衝突；由主線最後統一接線。</p>
+</div>
+
+<div class="card">
+<h3>本輪完成</h3>
+<table>
+<tr><th>元件</th><th>測試數</th><th>關鍵行為</th></tr>
+<tr><td>Button</td><td>5</td><td>（既有）loading 不設 disabled，aria-busy + aria-disabled</td></tr>
+<tr><td>SearchBar</td><td>5</td><td>（既有）中文組字期間不送查詢；Enter 組字中是選字</td></tr>
+<tr><td>StatusCard</td><td>5</td><td>（既有）danger→role=alert，其餘 role=status</td></tr>
+<tr><td>StationCard</td><td>6</td><td>arrivalTime 缺值顯示「更新中」；空清單顯示「目前沒有班次資訊」；actionText 才出按鈕</td></tr>
+<tr><td>TabBar</td><td>8</td><td>tablist / tab / aria-selected；roving tabindex；←/→ 循環並移焦；點已選中不發 change；badge 99+</td></tr>
+<tr><td>AppHeader</td><td>7</td><td>role=banner；h1 只在 title 非空白時渲染；left 覆蓋返回鈕</td></tr>
+<tr><td>EmptyState</td><td>5</td><td>role=status；icon aria-hidden；actionText 才出按鈕</td></tr>
+<tr><td>Loading</td><td>5</td><td>role=status + aria-live=polite；三尺寸；overlay；reduced-motion 放慢不停</td></tr>
+</table>
+<p><b>合計 46 測試</b>、<code>tsc --noEmit</code> 乾淨、Storybook build 成功。</p>
+<ul>
+<li><b>套件化</b>：<code>vite build.lib</code> 輸出 <code>dist/chelaile-design-system.{js,cjs,css}</code> + sourcemap；新增 <code>tsconfig.build.json</code> 只出 <code>.d.ts</code>；<code>package.json</code> 加 <code>main/module/types/exports/files/sideEffects</code>，React / ReactDOM 改為 <code>peerDependencies</code>（^18 || ^19）。</li>
+<li><b>入口</b>：<code>src/index.ts</code> 現在同時 export 元件、Props、hook、hook 型別（原本只 export 元件 + Props）。</li>
+<li><b>產生器</b>：<code>create-component.mjs</code> 的 <code>index.ts</code> 樣板補上 <code>UseXxxOptions</code> 型別 export，並在 <code>src/index.ts</code> 自動掛 hook；用 <code>zz-probe</code> 驗證過後清掉。</li>
+<li><b>README</b>：測試數改 46；補 5 個新元件的設計決策段落、套件用法、與 Vue 版的關係說明。</li>
+</ul>
+<pre>npm test     # 8 files / 46 tests
+npm run build
+# dist/chelaile-design-system.js   12.6 kB (gzip 3.9)
+# dist/chelaile-design-system.cjs   9.0 kB
+# dist/chelaile-design-system.css  10.8 kB
+# dist/index.d.ts + components/**/*.d.ts</pre>
+</div>
+
+<div class="card">
+<h3>踩坑記錄</h3>
+<ul>
+<li>兩 repo 起始都沒 <code>node_modules</code>。React 端 <code>npm install</code> 一次過。</li>
+<li>Vue 端安裝失敗兩次：先是 <code>storybook@^7.5</code> 與 <code>@storybook/*@^8.6</code> peer 衝突；改版號後撞到 <code>~/.npm-cache</code> 一筆損壞快取（EACCES rename / File exists，同一 sha512）。解法：<code>npm install --cache &lt;scratch dir&gt;</code> 換乾淨快取，不刪使用者快取。</li>
+</ul>
+</div>
+
+<h2>待辦（下一輪）</h2>
+<ul>
+<li>Dark mode token 區塊（Vue 端 style.css 已有 <code>.dark</code> 雛形，React 端無）。</li>
+<li>Storybook 加 a11y addon，讓 role / aria 規則有自動檢查。</li>
+<li>ESLint / Prettier / CI。</li>
+<li><code>.d.ts</code> 產出（vite-plugin-dts 或 tsc build tsconfig）。</li>
+</ul>
+</main>
+</body>
+</html>

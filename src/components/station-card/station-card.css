@@ -1,0 +1,87 @@
+.cl-station-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cl-space-sm);
+  padding: var(--cl-space-md);
+  background: var(--cl-card-background);
+  border-radius: var(--cl-radius-card);
+  box-shadow: var(--cl-shadow-card);
+  font-family: var(--cl-font-family);
+  color: var(--cl-text);
+}
+
+.cl-station-card__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--cl-space-sm);
+}
+
+.cl-station-card__name {
+  margin: 0;
+  min-width: 0;
+  font-size: var(--cl-font-size-subtitle);
+  line-height: var(--cl-line-height-subtitle);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cl-station-card__distance {
+  flex-shrink: 0;
+  font-size: var(--cl-font-size-caption);
+  line-height: var(--cl-line-height-caption);
+  color: var(--cl-text-secondary);
+}
+
+.cl-station-card__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cl-station-card__bus {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cl-space-sm);
+  padding: var(--cl-space-sm) 0;
+  border-top: 1px solid var(--cl-border);
+  font-size: var(--cl-font-size-body);
+  line-height: var(--cl-line-height-body);
+}
+
+.cl-station-card__route {
+  min-width: 0;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cl-station-card__time {
+  flex-shrink: 0;
+  color: var(--cl-text-secondary);
+}
+
+/* 即將進站：時間用品牌色強調，讓使用者一眼掃到 */
+.cl-station-card__bus.is-arriving .cl-station-card__time {
+  color: var(--cl-primary);
+  font-weight: 600;
+}
+
+.cl-station-card__empty {
+  margin: 0;
+  padding: var(--cl-space-md) 0;
+  text-align: center;
+  font-size: var(--cl-font-size-body);
+  line-height: var(--cl-line-height-body);
+  color: var(--cl-text-secondary);
+}
+
+.cl-station-card__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: var(--cl-space-xs);
+}

@@ -1,0 +1,38 @@
+.cl-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cl-space-sm);
+  padding: var(--cl-space-lg) var(--cl-space-md);
+  text-align: center;
+  font-family: var(--cl-font-family);
+}
+
+.cl-empty-state__icon {
+  display: block;
+  font-size: 48px;
+  line-height: 1;
+  margin-bottom: var(--cl-space-xs);
+}
+
+.cl-empty-state__title {
+  margin: 0;
+  font-size: var(--cl-font-size-subtitle);
+  line-height: var(--cl-line-height-subtitle);
+  font-weight: 500;
+  color: var(--cl-text);
+}
+
+.cl-empty-state__desc {
+  margin: 0;
+  max-width: 280px;
+  font-size: var(--cl-font-size-body);
+  line-height: var(--cl-line-height-body);
+  color: var(--cl-text-secondary);
+}
+
+/* 按鈕和文字之間留多一點呼吸，避免看起來像說明的一部分 */
+.cl-empty-state > .cl-button {
+  margin-top: var(--cl-space-sm);
+}

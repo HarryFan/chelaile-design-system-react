@@ -4,9 +4,26 @@
   "version": "0.1.0",
   "type": "module",
   "description": "行動端設計系統的 React 版本：每個元件強制配 hook、Storybook 文件與單元測試，並以 CLI 腳手架強制此結構。",
+  "main": "./dist/chelaile-design-system.cjs",
+  "module": "./dist/chelaile-design-system.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/chelaile-design-system.js",
+      "require": "./dist/chelaile-design-system.cjs"
+    },
+    "./style.css": "./dist/chelaile-design-system.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
+    "build": "tsc --noEmit && vite build && tsc -p tsconfig.build.json",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -14,9 +31,9 @@
     "build-storybook": "storybook build",
     "new": "node scripts/create-component.mjs"
   },
-  "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
     "@storybook/react-vite": "^9.1.10",
@@ -30,6 +47,8 @@
     "storybook": "^9.1.10",
     "typescript": "^5.9.3",
     "vite": "^7.1.9",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   }
 }

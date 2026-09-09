@@ -1,0 +1,92 @@
+.cl-tab-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  background: var(--cl-card-background);
+  border-top: 1px solid var(--cl-border);
+  font-family: var(--cl-font-family);
+  /* iPhone 底部 home indicator 的安全區 */
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+.cl-tab-bar__list {
+  display: flex;
+  align-items: stretch;
+}
+
+.cl-tab-bar__item {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 50px;
+  padding: var(--cl-space-xs) var(--cl-space-xs) 0;
+  border: 0;
+  background: transparent;
+  color: var(--cl-text-secondary);
+  cursor: pointer;
+  transition: color 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cl-tab-bar__item:focus-visible {
+  outline: 2px solid var(--cl-primary);
+  outline-offset: -2px;
+}
+
+.cl-tab-bar__item.is-active {
+  color: var(--cl-primary);
+}
+
+.cl-tab-bar__icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.cl-tab-bar__label {
+  max-width: 100%;
+  font-size: var(--cl-font-size-caption);
+  line-height: var(--cl-line-height-caption);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cl-tab-bar__badge {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(6px);
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--cl-radius-pill);
+  background: var(--cl-danger);
+  color: #fff;
+  font-size: 10px;
+  line-height: 16px;
+  font-weight: 600;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.cl-tab-bar__indicator {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 24px;
+  height: 2px;
+  transform: translateX(-50%);
+  border-radius: var(--cl-radius-pill);
+  background: var(--cl-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cl-tab-bar__item {
+    transition: none;
+  }
+}

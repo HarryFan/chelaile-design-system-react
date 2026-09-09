@@ -128,6 +128,7 @@ describe('${Pascal}', () => {
   'index.ts': `export { ${Pascal} } from './${Pascal}';
 export type { ${Pascal}Props } from './${Pascal}';
 export { use${Pascal} } from './use${Pascal}';
+export type { Use${Pascal}Options } from './use${Pascal}';
 `,
 };
 
@@ -140,7 +141,7 @@ for (const [name, content] of Object.entries(files)) {
 // 自動掛到套件出口，少一個「忘了 export」的常見疏漏
 const entryPath = join(ROOT, 'src', 'index.ts');
 const entry = await readFile(entryPath, 'utf8');
-const addition = `\nexport { ${Pascal} } from './components/${kebab}';\nexport type { ${Pascal}Props } from './components/${kebab}';\n`;
+const addition = `\nexport { ${Pascal}, use${Pascal} } from './components/${kebab}';\nexport type { ${Pascal}Props, Use${Pascal}Options } from './components/${kebab}';\n`;
 await writeFile(entryPath, entry.trimEnd() + '\n' + addition, 'utf8');
 
 console.log(`已建立 src/components/${kebab}/`);
