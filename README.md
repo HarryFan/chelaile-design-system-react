@@ -60,7 +60,7 @@ React 是 peerDependency，不會被重複打包。
 
 ### 與 Vue 版的關係
 
-同目錄的 `chelaile-mobile-design-system` 是 Vue 3 + Vant 版。兩邊 **props、事件、class 命名、a11y 語意、token 逐字一致**，只差語法層（`onAction` vs `@action`、hook vs composable）。單一 API 真相在 `./COMPONENT-SPEC.md`，改 API 先改規格再改兩邊。
+[chelaile-mobile-design-system](https://github.com/HarryFan/chelaile-mobile-design-system) 是同一套規格的 Vue 3 版。兩邊 **props、事件、class 命名、a11y 語意、token 逐字一致**，只差語法層（`onAction` vs `@action`、hook vs composable）。單一 API 真相在 `./COMPONENT-SPEC.md`，改 API 先改規格再改兩邊。
 
 ---
 
