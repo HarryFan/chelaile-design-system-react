@@ -1,0 +1,39 @@
+/* 只給 demo 頁用的版面樣式，不進打包產物 */
+body {
+  margin: 0;
+  background: var(--cl-background);
+  color: var(--cl-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang TC', 'Noto Sans TC', sans-serif;
+}
+
+.demo-phone {
+  max-width: 420px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--cl-card-background);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 0 1px var(--cl-border);
+}
+
+.demo-body {
+  flex: 1;
+  padding: 12px 16px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.demo-section h2 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cl-text-secondary);
+  margin: 0 0 8px;
+}
+
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
