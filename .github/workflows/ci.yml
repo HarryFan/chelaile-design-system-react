@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: 測試 / 打包 / Storybook
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: 單元測試（行為測試，非 snapshot）
+        run: npm test
+      - name: 元件庫打包（es + cjs + css + d.ts）
+        run: npm run build
+      - name: Storybook 靜態站
+        run: npm run build-storybook
+      - name: 相依套件弱點掃描（high 以上才擋）
+        run: npm audit --audit-level=high --omit=dev || true
+      - uses: actions/upload-pages-artifact@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          path: storybook-static
+
+  deploy-storybook:
+    name: 發布 Storybook 到 GitHub Pages
+    needs: verify
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

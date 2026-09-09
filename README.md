@@ -1,5 +1,9 @@
 # Chelaile Design System — React
 
+[![CI](https://github.com/HarryFan/chelaile-design-system-react/actions/workflows/ci.yml/badge.svg)](https://github.com/HarryFan/chelaile-design-system-react/actions/workflows/ci.yml) [![Storybook](https://img.shields.io/badge/Storybook-online-ff4785?logo=storybook&logoColor=white)](https://harryfan.github.io/chelaile-design-system-react/)
+
+> **怎麼讀這個 repo**：`COMPONENT-SPEC.md` 是 API 契約；`AGENTS.md` 是給 AI 與人的作業規則；`docs/DEVLOG.md` 記每一輪的起點診斷、決策、踩坑與 **AI 判斷錯在哪、怎麼發現**；`docs/ENGINEERING.md` 講架構、測試、資安、部署與哪些事一定要人決定。Storybook 線上版：https://harryfan.github.io/chelaile-design-system-react/
+
 行動端設計系統的 **React + TypeScript** 版本。同一套設計 token 與元件規範，我先用 Vue 3 實作過一次（[chelaile-mobile-design-system](https://github.com/HarryFan/chelaile-mobile-design-system)），這個 repo 是把同樣的工程規範搬到 React 生態。
 
 | | Vue 版 | React 版（本 repo） |
